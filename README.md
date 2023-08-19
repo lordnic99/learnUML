@@ -1,1 +1,1 @@
-# learnUML
+# This repository is using as a place for learning UML
