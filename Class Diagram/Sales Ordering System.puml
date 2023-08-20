@@ -1,0 +1,64 @@
+@startuml
+/''' Class Define '''/
+class Customer {
+    -name: String
+    -address
+}
+
+class Order {
+    -date: Date
+    -status: String
+    +calcSubTotal()
+    +calcTax()
+    +calcTotalWeight()
+}
+
+class OrderDetail {
+    -quality
+    -taxStatus
+    +calcSubTotal()
+    +calcWeight()
+    +calcTax()
+}
+
+class Item {
+    -shippingWeight
+    -description: String
+    +getPriceQuanity()
+    +getTax()
+    +inStock()
+}
+
+class Payment {
+    -amount: float
+}
+
+class Cash {
+    -cashTendered: float
+}
+
+class Check {
+    -name: String
+    -bankID: String
+    +authorized()
+}
+
+class Credit {
+    -name: String
+    -type: String
+    -expDate
+    +authorized()
+}
+
+/''' Class Association '''/
+Cash    -up-|>    Payment
+Check   -up-|>    Payment
+Credit  -up-|>    Payment
+
+left to right direction
+Order   "1"-down-- "1.." Payment
+OrderDetail "1..*" -left---* "1hdhr" Order
+Item ------left-------- OrderDetail
+Customer "1" -right---------- "0..*" Order
+
+@enduml
