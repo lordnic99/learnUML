@@ -1,0 +1,60 @@
+@startuml
+left to right direction
+
+/' Actor define here '/
+actor User as user
+actor Stduent as student
+actor Staff as staff
+actor Librarian as librarian
+actor Database as database_
+/'''''''''''''''''''''/
+
+student -|> user
+staff --|> user
+
+rectangle "Library Management" {
+    /'usecase define here '/
+    usecase (Authenticate) as auth
+    usecase (Reserve a book) as reserve_book
+    usecase (Request new book) as request_new_book
+    usecase (Renew a book) as renew_book
+    usecase (Pay fine) as pay_fine
+    usecase (Feedback) as feedback
+    usecase (Register new user) as register_new_user
+    usecase (Get library card ID) as get_lib_id
+    usecase (Fill up register form) as fill_reg_form
+    usecase (Fill up feedback from) as fill_feedback_form
+    usecase (Invalid username or password) as invalid_info
+    usecase (Invalid renewal) as invalid_renew
+    usecase (Add book item) as add_book
+    usecase (Delete book item) as delete_book
+    usecase (Edit book item) as edit_book
+    usecase (Update catalog) as update_catalog
+    usecase (Send overdue notification) as send_overdue
+    usecase (Send reservation available notification) as send_reservation_available
+    usecase (Send reservation canceled notification) as send_reservation_canceled
+
+    /''''''''''''''''''''''/
+    user ----> auth
+    user ----> reserve_book
+    user ----> request_new_book
+    user ----> renew_book
+    user ----> pay_fine
+    user ----> feedback
+    user ----> register_new_user
+    register_new_user .right.> fill_reg_form: include
+    register_new_user .down.> get_lib_id: include
+    feedback .down.> fill_feedback_form: include
+    invalid_info .up.> auth: extend
+    invalid_renew .up.>request_new_book: extend
+    add_book <---- librarian         
+    delete_book <---- librarian
+    edit_book <---- librarian
+    update_catalog <.down. add_book: include 
+    update_catalog <.down. delete_book: include
+    update_catalog <.down. edit_book: include
+    send_overdue <---- database_
+    send_reservation_available <---- database_
+    send_reservation_canceled <---- database_
+
+@enduml
